@@ -26,4 +26,4 @@ npm install --save less
 
 For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
 
-![image] (https://github.com/zhangtong-project/backStage-Admin/blob/main/src/assets/img-pro/1.png)
+![image](https://github.com/zhangtong-project/backStage-Admin/blob/main/src/assets/img-pro/1.png)
