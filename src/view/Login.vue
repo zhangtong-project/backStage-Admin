@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import {login} from '@/api/login.js'
+import {login,getUserInfo} from '@/api/login.js'
 export default{
     name:"Login",
     data(){
@@ -44,7 +44,8 @@ export default{
                 passWord: [
                     {required: true, message: '请输入密码', trigger: 'blur' }
                 ],
-            }
+            },
+            roleId:""
         }
     },
     mounted(){
@@ -58,13 +59,14 @@ export default{
                 this.$refs.ruleForm.validate((valid) =>{
                     if(valid){
                         login(params).then(res => {
-                            console.log(res)
                             if(res.code == 200){
                                 this.$message({
                                     message: '登录成功',
                                     type: 'success'
                                 });
-                                this.$router.push("/");
+                                this.roleId=res.data.userList.roleId;
+                                sessionStorage.setItem("roleId", this.roleId);
+                                this.getInfo();                                          
                             }else{
                                 this.$message({
                                     message: res.data.msg,
@@ -78,6 +80,16 @@ export default{
                     }
                 })
                 
+        },
+        getInfo(){
+            let roleIdObj={
+                roleId:this.roleId
+            }
+            console.log(this.roleId)
+            getUserInfo(roleIdObj).then(res => {
+                sessionStorage.setItem("token", res.data.userList.token);
+                this.$router.push("/");
+            })
         }
     }
 }

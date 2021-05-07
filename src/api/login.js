@@ -7,7 +7,15 @@ export function login(query) {
       data: query
     })
 }
-//获取用户
+//获取用户信息
+export function getUserInfo(params) {
+  return request({
+    url: '/user/getUserInfo',
+    method: 'get',
+    data: params
+  })
+}
+//获取用户列表
 export function getUserList(params) {
   return request({
     url: '/user/getUserList',

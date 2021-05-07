@@ -15,7 +15,7 @@
     </div>
     <div class="butBox">
       <el-button type="primary" @click="handAdd"><i class="el-icon-plus"></i>新增</el-button>
-      <el-button type="danger" @click="handBatchDel"><i class="el-icon-delete"></i>批量删除</el-button>
+      <el-button type="danger" @click="handBatchDel" v-if=" roleId =='admin' "><i class="el-icon-delete"></i>批量删除</el-button>
     </div>
     <div>
       <el-table :data="tableData"  style="width: 100%" @select-all="selectionChange" @select="selectTable">
@@ -29,8 +29,9 @@
         <el-table-column prop="email" label="邮箱" show-overflow-tooltip> </el-table-column>
         <el-table-column  label="操作" >
           <template slot-scope="scope">
-            <el-button @click="handleUpdate(scope.row)" type="success" size="small">修改</el-button>
-            <el-button type="danger" size="small" @click="handleDelete(scope.row)" id="del">删除</el-button>
+            <el-button @click="handleUpdate(scope.row)" type="success" size="small" v-if=" roleId =='admin' ">修改</el-button>
+            <el-button type="danger" size="small" @click="handleDelete(scope.row)" id="del" v-if=" roleId =='admin' ">删除</el-button>
+            <el-button type="primary" size="small" @click="handleSee(scope.row)"  v-if=" roleId =='sub' ">查看</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -52,19 +53,19 @@
         :before-close="closeDialog">
         <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
             <el-form-item label="用户名" prop="userName">
-                <el-input v-model="ruleForm.userName"></el-input>
+                <el-input v-model="ruleForm.userName" :disabled="disabled"></el-input>
             </el-form-item> 
             <el-form-item label="创建时间"  prop="createTime" required>
-                <el-date-picker type="date" placeholder="选择日期" v-model="ruleForm.createTime" style="width: 100%;"></el-date-picker>
+                <el-date-picker type="date" placeholder="选择日期" v-model="ruleForm.createTime" style="width: 100%;" :disabled="disabled"></el-date-picker>
             </el-form-item>
             <el-form-item label="用户id" prop="id">
-                <el-input v-model="ruleForm.id"></el-input>
+                <el-input v-model="ruleForm.id" :disabled="disabled"></el-input>
             </el-form-item>
             <el-form-item label="地址" prop="address">
-                <el-input v-model="ruleForm.address"></el-input>
+                <el-input v-model="ruleForm.address" :disabled="disabled"></el-input>
             </el-form-item>
             <el-form-item label="邮箱" prop="email">
-                <el-input v-model="ruleForm.email"></el-input>
+                <el-input v-model="ruleForm.email" :disabled="disabled"></el-input>
             </el-form-item>
             <el-form-item class="butItem">
                     <el-button @click="handleClose('ruleForm')">取 消</el-button>
@@ -116,11 +117,14 @@ export default {
               { type: 'email', message: '请输入正确的邮箱地址'}
           ],
       },
-      rowIds:[]
+      rowIds:[],
+      disabled:true,
+      roleId:sessionStorage.getItem("roleId")
     }
   },
   created(){
     this.getList()
+    console.log(this.roleId)
   },
   methods: {
     getList(){
@@ -148,6 +152,13 @@ export default {
     //新增
     handAdd(){
         this.dialogVisible=true;
+        this.ruleForm={
+          userName: '',
+          date: '',
+          id:'',
+          address:'',
+          email:''
+        }
         this.title = '新增用户';
     },
     //关闭弹窗
@@ -198,6 +209,11 @@ export default {
                 
             }
         });
+    },
+    handleSee(row){
+      this.dialogVisible=true;
+      this.title = '查看用户';
+      this.ruleForm = row;
     },
     //修改用户
     handleUpdate(row){

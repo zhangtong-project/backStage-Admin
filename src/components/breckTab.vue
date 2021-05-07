@@ -95,6 +95,7 @@ export default {
     font-size: .22rem;
     line-height: .5rem;
     margin-right: .3rem;
+    cursor: pointer;
   }
 }
 .el-dropdown{
@@ -125,6 +126,7 @@ export default {
     /deep/ .el-breadcrumb__inner{
       font-size: .14rem;
       line-height: .5rem;
+      cursor: pointer;
     }
   }
 }

@@ -1,13 +1,14 @@
 import Vue from 'vue'
+import VueRouter from 'vue-router'
 import Router from 'vue-router'
 
 Vue.use(Router)
 
 const originalPush = Router.prototype.push
-Router.prototype.push = function push(location) {
+Router.prototype.push = function push(location) {//去除浏览器警告
   return originalPush.call(this, location).catch(err => err)
 }
-export default new Router({
+const router = new Router({
   mode: 'history',
   routes: [
     {
@@ -31,16 +32,24 @@ export default new Router({
           component: resolve => require(['@/view/userList'],resolve),
         },
         {
-          path: '/Home2',
-          name: 'Home2',
-          component: resolve => require(['@/view/Home2'],resolve),
-        },
-        {
-          path: '/Home3',
-          name: 'Home3',
-          component: resolve => require(['@/view/Home3'],resolve),
+          path: '/infomation',
+          name: 'infomation',
+          component: resolve => require(['@/view/infomation'],resolve),
         },
       ]
     }
   ]
-})
+});
+router.beforeEach((to, from, next) => {
+  if (to.path === '/login') {
+    next();
+  } else {
+    let token = sessionStorage.getItem('token');
+    if (token === null || token === '') {
+      next('/login');
+    } else {
+      next();
+    }
+  }
+});
+export default router;

@@ -5,6 +5,7 @@ Mock.setup({
     timeout: '300-600'
 })
 Mock.mock(/\/user\/login/, 'post', loginApi.loginUser);
+Mock.mock(/\/user\/getUserInfo/, 'get', loginApi.getUserInfo);
 Mock.mock(/\/user\/getUserList/, 'get', loginApi.getUserList);
 Mock.mock(/\/user\/addUserList/, 'post', loginApi.addUserList);
 Mock.mock(/\/user\/deleteRole/, 'post', loginApi.deleteRole);

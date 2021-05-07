@@ -45,35 +45,22 @@ export default {
           path: '/userList',
           name: 'userList',
           label: '用户管理',
-          icon: 's-home',
+          icon: 'user',
           url: '/userList'
         },
         {
-          label: '其他11',
-          icon: 'location',
+          label: '信息管理',
+          icon: 's-platform',
           children: [
             {
-              path: '/Home2',
-              name: 'Home2',
-              label: '第二其他111',
-              icon: 's-home',
-              url: '/Home2'
+              path: '/infomation',
+              name: 'infomation',
+              label: '个人信息',
+              icon: 's-custom',
+              url: '/infomation'
             },
           ]
-        },
-        {
-          label: '最后其他',
-          icon: 'location',
-          children: [
-            {
-              path: '/Home3',
-              name: 'Home3',
-              label: '第三',
-              icon: 's-home',
-              url: '/Home3'
-            },
-          ]
-        },
+        },      
       ]
     };
   },

@@ -3,7 +3,7 @@ import Mock from 'mockjs'
 const Random = Mock.Random; // Mock.Random 是一个工具类，用于生成各种随机数据
 let list = []; // 用于接受生成数据的数组
 const count=30;
-
+   
 for (let i = 0; i < count; i++) {
   const template={
     id:Random.guid(),
@@ -24,11 +24,13 @@ export default{
           userList = {
             userName:'admin',
             roleName:'管理员',
+            roleId:"admin"
           }
       }else if(data.userName === 'sub' && data.passWord === "123456"){
           userList = {
             userName:'sub',
             roleName:'下属',
+            roleId:"sub"
           }
       }else{
           return {
@@ -39,6 +41,43 @@ export default{
             }
         }
         
+      }
+      return {
+        code: 200,
+        data: {
+          userList: userList
+        }
+      }
+    },
+    // 获取登录用户信息
+    getUserInfo:config => {
+      let data = JSON.parse(config.body);
+      let userList = {};
+      console.log(data,"admin")
+      if(data.roleId === 'admin'){
+          userList = {
+            userName:'admin',
+            roleName:'管理员',
+            roleId:"admim",
+            email:Random.email(),
+            img:Random.image('100x100'),
+            token:Mock.mock(/[a-z]{2}[A-Z]{2}[0-9][a-z]{2}[A-Z]{2}[0-9][a-z]{2}[A-Z]{2}[0-9]{2}/),
+            work:Random.pick(["医生","飞行员","程序员"],1),
+            workYear:Random.integer(1,5)
+          }
+      }else if(data.roleId === 'sub'){
+          userList = {
+            userName:'sub',
+            roleName:'下属',
+            roleId:"sub",
+            email:Random.email(),
+            img:Random.image('100x100'),
+            token:Mock.mock(/[a-z]{2}[A-Z]{2}[0-9][a-z]{2}[A-Z]{2}[0-9][a-z]{2}[A-Z]{2}[0-9]{2}/),
+            work:Random.pick(["医生","飞行员","程序员"],1),
+            workYear:Random.integer(1,5)
+          }
+      }else{
+          userList = {}
       }
       return {
         code: 200,

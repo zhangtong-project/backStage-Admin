@@ -41,7 +41,6 @@ export default {
   },
   methods: {
     handleClick(item) {
-      sessionStorage.clear();
       sessionStorage.setItem("currentPath", JSON.stringify(item));
       this.$store.commit('navList', item)
       this.$router.push({ name: item.name })
