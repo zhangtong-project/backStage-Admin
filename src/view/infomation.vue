@@ -4,7 +4,7 @@
       <img :src="imageUrl" @click="handlePicture" class="image"/>
       <span  @click.stop="uploadImg">{{imgText=this.imageUrl==""?"上传头像":"修改头像"}}</span>
       <input type="file" accept="image/*" @change="handlePic" class="hiddenInput"/>
-      <el-dialog :visible.sync="dialogVisible">
+      <el-dialog :visible.sync="dialogVisible" width="30%">
         <img width="100%" :src="imageUrl" alt="">
       </el-dialog>
    </div>
@@ -25,7 +25,7 @@
           :before-upload="beforeUpload"
           :on-success="handleSuccess"
           :on-error="handleError">
-          <el-button  size="small" type="danger">{{fileBtnText= this.file ==""?"选择文件":"更好文件"}}</el-button>
+          <el-button  size="small" type="danger">{{fileBtnText= this.file ==""?"选择文件":"更换文件"}}</el-button>
         </el-upload>
         <span style="font-size:.12rem;color:red;">(仅限pdf)</span>
         <span class="fname" @click="viewfile">{{fileName}}</span>
