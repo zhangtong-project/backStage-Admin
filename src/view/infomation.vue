@@ -170,6 +170,7 @@ export default {
   span{
     cursor: pointer;
     font-size: .14rem;
+    color: #409eff;
   }
 }
 .hiddenInput{
